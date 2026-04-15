@@ -4,12 +4,17 @@ import Sidebar from "./components/Sidebar";
 import Add from "./pages/Add";
 import List from "./pages/List";
 import Order from "./pages/Order";
+import { useState } from "react";
+import Login from "./components/Login";
 
 function App() {
+  const[token,setToken] = useState('');
+
   return (
     <div className="bg-[#f8f8f8] min-h-screen">
-      
-      <Navbar />
+      {token == "" ? <Login/> : 
+ <>
+<Navbar />
 
       <div className="flex">
         <Sidebar />
@@ -23,7 +28,13 @@ function App() {
         </div>
       </div>
 
+      </>
+      
+}
+     
+
     </div>
+      
   );
 }
 
