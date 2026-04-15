@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onSubmitHandler = async (e)=>{
+    e.preventDefault();
+
+  }
 
   return (
     <section className="w-full min-h-screen flex items-center justify-center pt-28 pb-20 px-6 bg-gradient-to-br from-gray-100 via-white to-gray-200">
@@ -11,26 +17,24 @@ const Login = () => {
 
         {/* Heading */}
         <h1 className="text-3xl font-extrabold text-center mb-3 tracking-tight">
-          {isLogin ? "Login to Admin Panel" : "Create Your Account 🚀"}
+          Login to Admin Panel
         </h1>
 
         <p className="text-gray-600 text-center mb-8 text-sm">
-          {isLogin
-            ? "Login to continue shopping premium gadgets."
-            : "Sign up and start your journey with KIK GADGETS."}
+          Login to continue access your admin panel.
         </p>
 
         {/* Form */}
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={onSubmitHandler}>
 
           {/* Name (Register Only) */}
-          {!isLogin && (
+          {/* {!isLogin && (
             <input
               type="text"
               placeholder="Full Name"
               className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black transition"
             />
-          )}
+          )} */}
 
           {/* Email */}
           <input
@@ -58,7 +62,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-black text-white py-3 rounded-xl font-semibold hover:bg-gray-900 transition duration-300 shadow-md"
           >
-            {isLogin ? "Login" : "Sign Up"}
+            Login
           </button>
         </form>
 
@@ -82,7 +86,7 @@ const Login = () => {
         </button> */}
 
         {/* Toggle */}
-        <p className="text-sm text-center mt-8 text-gray-600">
+        {/* <p className="text-sm text-center mt-8 text-gray-600">
           {isLogin ? "New here?" : "Already have an account?"}
 
           <span
@@ -91,7 +95,7 @@ const Login = () => {
           >
             {isLogin ? "Create Account" : "Login"}
           </span>
-        </p>
+        </p> */}
       </div>
     </section>
   );
