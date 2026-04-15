@@ -4,30 +4,31 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // agar tu token use karega future me
     localStorage.removeItem("token");
-
-    navigate("/"); // ya login page
+    navigate("/");
   };
 
   return (
-    <div className="w-full h-16 bg-gray-900 text-white flex items-center justify-between px-6">
-      
-      {/* 🔥 Left side */}
-      <h1 className="text-xl font-bold">Admin Panel</h1>
+    <div className="bg-white shadow px-4 md:px-8 py-4 flex items-center justify-between">
 
-      {/* 🔥 Right side */}
-      <div className="flex items-center gap-4">
-        
-        <p>Admin</p>
+      {/* Left (Empty for spacing on desktop) */}
+      <div className="hidden md:block w-1/3"></div>
+
+      {/* 🔹 Center Logo */}
+      <h1 className="text-xl md:text-2xl font-bold tracking-wide text-center w-full md:w-1/3">
+        URBAN <span className="text-gray-500">FASHION</span>
+      </h1>
+
+      {/* 🔹 Right */}
+      <div className="flex items-center justify-end gap-3 md:gap-5 w-1/3">
+        <p className="hidden sm:block text-gray-600">Admin</p>
 
         <button
           onClick={handleLogout}
-          className="bg-red-500 px-3 py-1 rounded"
+          className="bg-black text-white px-3 md:px-4 py-1 rounded-full text-sm md:text-base hover:bg-gray-800"
         >
           Logout
         </button>
-
       </div>
     </div>
   );
