@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-
+import axios from 'axios'
+import { backendUrl } from "../App";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSubmitHandler = async (e)=>{
     e.preventDefault();
+    const response = await axios.post(backendUrl+ '/api/user/admin',{email,password});
+    console.log(response);
+    
+    
 
   }
 
@@ -39,6 +44,7 @@ const Login = () => {
           {/* Email */}
           <input
             type="email"
+             onChange={(e)=>setEmail(e.target.value)} value={email}   
             placeholder="Email Address"
             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black transition"
           />
@@ -46,6 +52,7 @@ const Login = () => {
           {/* Password */}
           <input
             type="password"
+            onChange={(e)=>setPassword(e.target.value)} value={password}
             placeholder="Password"
             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black transition"
           />
