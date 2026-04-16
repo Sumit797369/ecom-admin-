@@ -1,65 +1,185 @@
 import { useState } from "react";
 
 const Add = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    category: "Men",
+    subCategory: "Topwear",
+    price: "",
+    sizes: [],
+  });
+
+  const [images, setImages] = useState([null, null, null, null]);
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSize = (size) => {
+    setData((prev) => ({
+      ...prev,
+      sizes: prev.sizes.includes(size)
+        ? prev.sizes.filter((s) => s !== size)
+        : [...prev.sizes, size],
+    }));
+  };
+
+  const handleImage = (index, file) => {
+    const newImages = [...images];
+    newImages[index] = file;
+    setImages(newImages);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("image1", image);
+
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
+    images.forEach((img, i) => {
+      if (img) formData.append(`image${i + 1}`, img);
+    });
 
     const res = await fetch("http://localhost:4000/api/product/add", {
       method: "POST",
       body: formData,
     });
 
-    const data = await res.json();
-    console.log(data);
+    const result = await res.json();
+    console.log(result);
 
     alert("Product Added ✅");
   };
 
   return (
-    <div className="flex justify-center items-start md:items-center min-h-[80vh] px-3">
-      
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-5 md:p-6 rounded-2xl shadow w-full max-w-md"
-      >
-        <h2 className="text-lg md:text-xl font-semibold mb-4 text-center">
-          Add Product
-        </h2>
+    <div className="w-full px-3 md:px-8 py-6">
 
-        <input
-          type="text"
-          placeholder="Product Name"
-          className="w-full border p-2.5 mb-3 rounded-lg outline-none focus:ring-2 focus:ring-black"
-          onChange={(e) => setName(e.target.value)}
-        />
+      <h1 className="text-2xl font-bold mb-6">Add Product</h1>
 
-        <input
-          type="number"
-          placeholder="Price"
-          className="w-full border p-2.5 mb-3 rounded-lg outline-none focus:ring-2 focus:ring-black"
-          onChange={(e) => setPrice(e.target.value)}
-        />
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
 
-        <input
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-          className="w-full mb-4 text-sm"
-        />
+        {/* 🔹 Product Name */}
+        <div>
+          <label className="font-medium">Product Name</label>
+          <input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            className="w-full mt-2 border p-3 rounded-lg focus:ring-2 focus:ring-black"
+          />
+        </div>
 
-        <button className="bg-black text-white py-2.5 rounded-lg w-full hover:bg-gray-800 transition">
+        {/* 🔹 Description */}
+        <div>
+          <label className="font-medium">Description</label>
+          <textarea
+            name="description"
+            rows="4"
+            onChange={handleChange}
+            className="w-full mt-2 border p-3 rounded-lg focus:ring-2 focus:ring-black"
+          />
+        </div>
+
+        {/* 🔹 Category */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>
+            <label className="font-medium">Category</label>
+            <select
+              name="category"
+              onChange={handleChange}
+              className="w-full mt-2 border p-3 rounded-lg"
+            >
+              <option>Men</option>
+              <option>Women</option>
+              <option>Kids</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="font-medium">Sub Category</label>
+            <select
+              name="subCategory"
+              onChange={handleChange}
+              className="w-full mt-2 border p-3 rounded-lg"
+            >
+              <option>Topwear</option>
+              <option>Bottomwear</option>
+              <option>Winterwear</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="font-medium">Price</label>
+            <input
+              type="number"
+              name="price"
+              onChange={handleChange}
+              className="w-full mt-2 border p-3 rounded-lg"
+            />
+          </div>
+        </div>
+
+        {/* 🔹 Sizes */}
+        <div>
+          <label className="font-medium">Sizes</label>
+          <div className="flex gap-3 mt-2 flex-wrap">
+            {["S", "M", "L", "XL"].map((size) => (
+              <button
+                type="button"
+                key={size}
+                onClick={() => handleSize(size)}
+                className={`px-4 py-1 border rounded-full ${
+                  data.sizes.includes(size)
+                    ? "bg-black text-white"
+                    : ""
+                }`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 🔹 Image Upload */}
+        <div>
+          <label className="font-medium">Upload Images</label>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+            {images.map((img, index) => (
+              <label
+                key={index}
+                className="border rounded-lg h-32 flex items-center justify-center cursor-pointer bg-gray-50"
+              >
+                {img ? (
+                  <img
+                    src={URL.createObjectURL(img)}
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <span className="text-gray-400">Upload</span>
+                )}
+                <input
+                  type="file"
+                  hidden
+                  onChange={(e) =>
+                    handleImage(index, e.target.files[0])
+                  }
+                />
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* 🔹 Submit */}
+        <button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800">
           Add Product
         </button>
-      </form>
 
+      </form>
     </div>
   );
 };
