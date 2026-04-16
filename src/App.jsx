@@ -4,17 +4,20 @@ import Sidebar from "./components/Sidebar";
 import Add from "./pages/Add";
 import List from "./pages/List";
 import Order from "./pages/Order";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "./components/Login";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 function App() {
   const[token,setToken] = useState('');
+  useEffect(()=>{
+    localStorage.setItem("token",token)
+  },[token])
 
   return (
     <div className="bg-[#f8f8f8] min-h-screen">
-      {token == "" ? <Login/> : 
+      {token == "" ? <Login setToken={setToken} /> : 
  <>
 <Navbar />
 
