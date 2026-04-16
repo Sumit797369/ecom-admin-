@@ -5,7 +5,7 @@ const Add = () => {
     name: "",
     description: "",
     category: "Men",
-    subCategory: "Topwear",
+    subCategory: "Topwear ",
     price: "",
     sizes: [],
   });
