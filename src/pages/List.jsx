@@ -97,10 +97,6 @@ const List = () => {
                   >
                     Delete
                   </button>
-
-                  {/* <button className="flex-1 border py-1.5 rounded-lg text-sm hover:bg-gray-100 transition">
-                    Edit
-                  </button> */}
                 </div>
               </div>
             </div>
