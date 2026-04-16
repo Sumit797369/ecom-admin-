@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({setToken}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
         <p className="hidden sm:block text-gray-600">Admin</p>
 
         <button
-          onClick={handleLogout}
+          onClick={()=>setToken("")}
           className="bg-black text-white px-3 md:px-4 py-1 rounded-full text-sm md:text-base hover:bg-gray-800"
         >
           Logout

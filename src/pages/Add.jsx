@@ -25,36 +25,42 @@ const Add = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-xl shadow w-[400px]"
-    >
-      <h2 className="text-xl font-semibold mb-4">Add Product</h2>
+    <div className="flex justify-center items-start md:items-center min-h-[80vh] px-3">
+      
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-5 md:p-6 rounded-2xl shadow w-full max-w-md"
+      >
+        <h2 className="text-lg md:text-xl font-semibold mb-4 text-center">
+          Add Product
+        </h2>
 
-      <input
-        type="text"
-        placeholder="Product Name"
-        className="w-full border p-2 mb-3 rounded"
-        onChange={(e) => setName(e.target.value)}
-      />
+        <input
+          type="text"
+          placeholder="Product Name"
+          className="w-full border p-2.5 mb-3 rounded-lg outline-none focus:ring-2 focus:ring-black"
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      <input
-        type="number"
-        placeholder="Price"
-        className="w-full border p-2 mb-3 rounded"
-        onChange={(e) => setPrice(e.target.value)}
-      />
+        <input
+          type="number"
+          placeholder="Price"
+          className="w-full border p-2.5 mb-3 rounded-lg outline-none focus:ring-2 focus:ring-black"
+          onChange={(e) => setPrice(e.target.value)}
+        />
 
-      <input
-        type="file"
-        onChange={(e) => setImage(e.target.files[0])}
-        className="mb-3"
-      />
+        <input
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
+          className="w-full mb-4 text-sm"
+        />
 
-      <button className="bg-black text-white px-4 py-2 rounded w-full">
-        Add Product
-      </button>
-    </form>
+        <button className="bg-black text-white py-2.5 rounded-lg w-full hover:bg-gray-800 transition">
+          Add Product
+        </button>
+      </form>
+
+    </div>
   );
 };
 
