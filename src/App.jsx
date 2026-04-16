@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="bg-[#f8f8f8] min-h-screen overflow-x-hidden">
-      
+
       {token === "" ? (
         <Login setToken={setToken} />
       ) : (
@@ -28,21 +28,16 @@ function App() {
           {/* 🔹 Navbar */}
           <Navbar setToken={setToken} />
 
-          {/* 🔹 Main Layout */}
-          <div className="flex flex-col md:flex-row">
+          {/* 🔹 Top Navigation (Sidebar) */}
+          <Sidebar />
 
-            {/* Sidebar */}
-            <Sidebar />
-
-            {/* Content */}
-            <div className="p-3 md:p-6">
-              <Routes>
-                <Route path="/add" element={<Add token={token} />} />
-                <Route path="/list" element={<List token={token} />} />
-                <Route path="/order" element={<Order token={token} />} />
-              </Routes>
-            </div>
-
+          {/* 🔹 Page Content */}
+          <div className="max-w-7xl mx-auto w-full p-3 md:p-6">
+            <Routes>
+              <Route path="/add" element={<Add token={token} />} />
+              <Route path="/list" element={<List token={token} />} />
+              <Route path="/order" element={<Order token={token} />} />
+            </Routes>
           </div>
         </>
       )}
