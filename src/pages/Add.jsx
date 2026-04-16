@@ -11,7 +11,7 @@ const Add = ({ token }) => {
     price: "",
     sizes: [],
   });
-
+const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([null, null, null, null]);
 
   const handleChange = (e) => {
