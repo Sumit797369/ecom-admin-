@@ -11,7 +11,7 @@ const Add = ({ token }) => {
     price: "",
     sizes: [],
   });
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([null, null, null, null]);
 
   const handleChange = (e) => {
@@ -35,26 +35,26 @@ const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const formData = new FormData();
 
     Object.keys(data).forEach((key) => {
-       if (key === "sizes") {
-    formData.append("sizes", JSON.stringify(data.sizes)); // 🔥 FIX
-  } else {
-    formData.append(key, data[key]);
-  }
+      if (key === "sizes") {
+        formData.append("sizes", JSON.stringify(data.sizes)); // 🔥 FIX
+      } else {
+        formData.append(key, data[key]);
+      }
     });
 
     images.forEach((img, i) => {
       if (img) formData.append(`image${i + 1}`, img);
     });
 
-    const res = await fetch(backendUrl+"/api/product/add", {
+    const res = await fetch(backendUrl + "/api/product/add", {
       method: "POST",
       headers: {
-    token: token, 
-  },
+        token: token,
+      },
       body: formData,
     });
 
@@ -66,11 +66,9 @@ const [loading, setLoading] = useState(false);
 
   return (
     <div className="w-full px-3 md:px-8 py-6">
-
       <h1 className="text-2xl font-bold mb-6">Add Product</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
-
         {/* 🔹 Product Name */}
         <div>
           <label className="font-medium">Product Name</label>
@@ -177,9 +175,7 @@ const [loading, setLoading] = useState(false);
                 <input
                   type="file"
                   hidden
-                  onChange={(e) =>
-                    handleImage(index, e.target.files[0])
-                  }
+                  onChange={(e) => handleImage(index, e.target.files[0])}
                 />
               </label>
             ))}
@@ -190,7 +186,6 @@ const [loading, setLoading] = useState(false);
         <button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
           Add Product
         </button>
-
       </form>
     </div>
   );
