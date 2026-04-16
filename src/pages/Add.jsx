@@ -1,10 +1,69 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { backendUrl } from "../App";
 
-const Add = () => {
-const [image1,setImage1] = useState(false)
-const [image2,setImage2] = useState(false)
-const [image3,setImage3] = useState(false)
-const [image4,setImage4] = useState(false)
+const Add = ({ token }) => {
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    category: "Men",
+    subCategory: "Topwear",
+    price: "",
+    sizes: [],
+  });
+
+  const [images, setImages] = useState([null, null, null, null]);
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSize = (size) => {
+    setData((prev) => ({
+      ...prev,
+      sizes: prev.sizes.includes(size)
+        ? prev.sizes.filter((s) => s !== size)
+        : [...prev.sizes, size],
+    }));
+  };
+
+  const handleImage = (index, file) => {
+    const newImages = [...images];
+    newImages[index] = file;
+    setImages(newImages);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    Object.keys(data).forEach((key) => {
+       if (key === "sizes") {
+    formData.append("sizes", JSON.stringify(data.sizes)); // 🔥 FIX
+  } else {
+    formData.append(key, data[key]);
+  }
+    });
+
+    images.forEach((img, i) => {
+      if (img) formData.append(`image${i + 1}`, img);
+    });
+
+    const res = await fetch(backendUrl+"/api/product/add", {
+      method: "POST",
+      headers: {
+    token: token, // 🔥 ye line add kar
+  },
+      body: formData,
+    });
+
+    const result = await res.json();
+    console.log(result);
+
+    toast.success("Product Added ✅");
+  };
+
   return (
     <div className="w-full px-3 md:px-8 py-6">
 
@@ -29,14 +88,14 @@ const [image4,setImage4] = useState(false)
           <label className="font-medium">Description</label>
           <textarea
             name="description"
-            placeholder="Write product details like fabric, fit, style, etc..."
             rows="4"
+            placeholder="Write product details like fabric, fit, style, etc..."
             onChange={handleChange}
             className="w-full mt-2 border p-3 rounded-lg focus:ring-2 focus:ring-black"
           />
         </div>
 
-        {/* 🔹 Category */}
+        {/* 🔹 Category / SubCategory / Price */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div>
             <label className="font-medium">Category</label>
@@ -78,7 +137,7 @@ const [image4,setImage4] = useState(false)
 
         {/* 🔹 Sizes */}
         <div>
-          <label className="font-medium">Sizes</label>
+          <label className="font-medium">Available Sizes</label>
           <div className="flex gap-3 mt-2 flex-wrap">
             {["S", "M", "L", "XL"].map((size) => (
               <button
@@ -88,7 +147,7 @@ const [image4,setImage4] = useState(false)
                 className={`px-4 py-1 border rounded-full ${
                   data.sizes.includes(size)
                     ? "bg-black text-white"
-                    : ""
+                    : "hover:bg-gray-100"
                 }`}
               >
                 {size}
@@ -105,7 +164,7 @@ const [image4,setImage4] = useState(false)
             {images.map((img, index) => (
               <label
                 key={index}
-                className="border rounded-lg h-32 flex items-center justify-center cursor-pointer bg-gray-50"
+                className="border rounded-lg h-32 flex items-center justify-center cursor-pointer bg-gray-50 text-gray-400 text-sm"
               >
                 {img ? (
                   <img
@@ -113,7 +172,7 @@ const [image4,setImage4] = useState(false)
                     className="h-full w-full object-cover rounded-lg"
                   />
                 ) : (
-                  <span className="text-gray-400">Upload</span>
+                  `Image ${index + 1}`
                 )}
                 <input
                   type="file"
@@ -128,7 +187,7 @@ const [image4,setImage4] = useState(false)
         </div>
 
         {/* 🔹 Submit */}
-        <button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800">
+        <button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
           Add Product
         </button>
 
