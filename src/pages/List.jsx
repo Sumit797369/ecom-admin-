@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { backendUrl } from "../App";
 
 const List = () => {
   const [products, setProducts] = useState([]);
@@ -6,7 +7,7 @@ const List = () => {
 
   const fetchProducts = async () => {
     setLoading(true);
-    const res = await fetch("http://localhost:4000/api/product/list");
+    const res = await fetch(backendUrl+"/api/product/list");
     const data = await res.json();
     setProducts(data.products);
     setLoading(false);
@@ -15,7 +16,7 @@ const List = () => {
   const deleteProduct = async (id) => {
     if (!window.confirm("Delete this product?")) return; // 🔥 confirm
 
-    await fetch("http://localhost:4000/api/product/remove", {
+    await fetch(backendUrl+"/api/product/remove", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
