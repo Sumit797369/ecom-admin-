@@ -60,7 +60,7 @@ const Add = ({ token }) => {
 
     const result = await res.json();
     console.log(result);
-
+    setLoading(false);
     toast.success("Product Added ✅");
   };
 
