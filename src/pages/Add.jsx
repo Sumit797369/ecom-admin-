@@ -53,7 +53,7 @@ const Add = ({ token }) => {
     const res = await fetch(backendUrl+"/api/product/add", {
       method: "POST",
       headers: {
-    token: token, // 🔥 ye line add kar
+    token: token, 
   },
       body: formData,
     });
