@@ -19,16 +19,16 @@ function App() {
     <div className="bg-[#f8f8f8] min-h-screen">
       {token == "" ? <Login setToken={setToken} /> : 
  <>
-<Navbar />
+<Navbar setToken={setToken} />
 
       <div className="flex">
         <Sidebar />
 
         <div className="flex-1 p-8">
           <Routes>
-            <Route path="/add" element={<Add />} />
-            <Route path="/list" element={<List />} />
-            <Route path="/order" element={<Order />} />
+            <Route path="/add" element={<Add token={token} />} />
+            <Route path="/list" element={<List token={token} />} />
+            <Route path="/order" element={<Order token={token} />} />
           </Routes>
         </div>
       </div>
