@@ -68,6 +68,7 @@ const Add = () => {
           <input
             type="text"
             name="name"
+            placeholder="e.g. Cotton Oversized T-Shirt"
             onChange={handleChange}
             className="w-full mt-2 border p-3 rounded-lg focus:ring-2 focus:ring-black"
           />
@@ -78,6 +79,7 @@ const Add = () => {
           <label className="font-medium">Description</label>
           <textarea
             name="description"
+            placeholder="Write product details like fabric, fit, style, etc..."
             rows="4"
             onChange={handleChange}
             className="w-full mt-2 border p-3 rounded-lg focus:ring-2 focus:ring-black"
@@ -117,6 +119,7 @@ const Add = () => {
             <input
               type="number"
               name="price"
+              placeholder="e.g. 999"
               onChange={handleChange}
               className="w-full mt-2 border p-3 rounded-lg"
             />
