@@ -1,60 +1,10 @@
 import { useState } from "react";
 
 const Add = () => {
-  const [data, setData] = useState({
-    name: "",
-    description: "",
-    category: "Men",
-    subCategory: "Topwear ",
-    price: "",
-    sizes: [],
-  });
-
-  const [images, setImages] = useState([null, null, null, null]);
-
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSize = (size) => {
-    setData((prev) => ({
-      ...prev,
-      sizes: prev.sizes.includes(size)
-        ? prev.sizes.filter((s) => s !== size)
-        : [...prev.sizes, size],
-    }));
-  };
-
-  const handleImage = (index, file) => {
-    const newImages = [...images];
-    newImages[index] = file;
-    setImages(newImages);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
-
-    images.forEach((img, i) => {
-      if (img) formData.append(`image${i + 1}`, img);
-    });
-
-    const res = await fetch("http://localhost:4000/api/product/add", {
-      method: "POST",
-      body: formData,
-    });
-
-    const result = await res.json();
-    console.log(result);
-
-    alert("Product Added ✅");
-  };
-
+const [image1,setImage1] = useState(false)
+const [image2,setImage2] = useState(false)
+const [image3,setImage3] = useState(false)
+const [image4,setImage4] = useState(false)
   return (
     <div className="w-full px-3 md:px-8 py-6">
 
