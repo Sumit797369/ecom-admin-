@@ -10,6 +10,7 @@ const Add = ({ token }) => {
     subCategory: "Topwear",
     price: "",
     sizes: [],
+    bestseller: false,
   });
 
   const [images, setImages] = useState([null, null, null, null]);
@@ -120,7 +121,6 @@ const Add = ({ token }) => {
       ) : (
         /* 🔹 FORM */
         <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
-          
           {/* Name */}
           <div>
             <label className="font-medium">Product Name</label>
@@ -220,14 +220,25 @@ const Add = ({ token }) => {
                 <input
                   type="file"
                   hidden
-                  onChange={(e) =>
-                    handleImage(index, e.target.files[0])
-                  }
+                  onChange={(e) => handleImage(index, e.target.files[0])}
                 />
               </label>
             ))}
           </div>
-
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="bestSeller"
+              checked={data.bestSeller}
+              onChange={(e) =>
+                setData({ ...data, bestSeller: e.target.checked })
+              }
+              className="w-5 h-5 cursor-pointer"
+            />
+            <label htmlFor="bestSeller" className="font-medium cursor-pointer">
+              Add to Best Seller
+            </label>
+          </div>
           {/* Button */}
           <button
             disabled={loading}

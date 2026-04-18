@@ -7,7 +7,7 @@ const List = () => {
 
   const fetchProducts = async () => {
     setLoading(true);
-    const res = await fetch(backendUrl+"/api/product/list");
+    const res = await fetch(backendUrl + "/api/product/list");
     const data = await res.json();
     setProducts(data.products);
     setLoading(false);
@@ -16,7 +16,7 @@ const List = () => {
   const deleteProduct = async (id) => {
     if (!window.confirm("Delete this product?")) return; // 🔥 confirm
 
-    await fetch(backendUrl+"/api/product/remove", {
+    await fetch(backendUrl + "/api/product/remove", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,6 +53,16 @@ const List = () => {
               </div>
             </div>
           ))}
+        </div>
+      ) : products.length === 0 ? (
+        /* 🔥 EMPTY STATE */
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <p className="text-xl font-semibold text-gray-600">
+            No Products Found 😕
+          </p>
+          <p className="text-gray-400 mt-2 text-sm">
+            Start by adding your first product
+          </p>
         </div>
       ) : (
         /* 🔹 Product Grid */
