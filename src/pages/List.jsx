@@ -39,81 +39,85 @@ const List = () => {
 
       {/* 🔹 Shimmer Loading */}
       {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse"
-            >
-              <div className="h-40 md:h-52 bg-gray-200"></div>
-              <div className="p-4 space-y-2">
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                <div className="h-8 bg-gray-200 rounded mt-3"></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : products.length === 0 ? (
-        /* 🔥 EMPTY STATE */
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-xl font-semibold text-gray-600">
-            No Products Found 😕
-          </p>
-          <p className="text-gray-400 mt-2 text-sm">
-            Start by adding your first product
-          </p>
-        </div>
-      ) : (
-        /* 🔹 Product Grid */
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
-          {products.map((item) => (
-            <div
-              key={item._id}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm 
-              hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative"
-            >
-              {/* 🔹 Image */}
-              <div className="overflow-hidden relative">
-                <img
-                  src={`http://localhost:4000${item.image[0]}`}
-                  className="w-full h-40 md:h-52 object-cover 
-                  group-hover:scale-110 transition-transform duration-500"
-                />
+  /* 🔹 Shimmer */
+  <div className="space-y-3">
+    {[...Array(6)].map((_, i) => (
+      <div
+        key={i}
+        className="h-12 bg-gray-200 rounded animate-pulse"
+      ></div>
+    ))}
+  </div>
+) : products.length === 0 ? (
+  /* 🔥 Empty */
+  <div className="text-center py-20 text-gray-500">
+    No Products Found 😕
+  </div>
+) : (
+  /* 🔥 TABLE */
+  <div className="overflow-x-auto bg-white rounded-xl shadow">
+    <table className="min-w-full text-sm text-left">
+      
+      {/* 🔹 Head */}
+      <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+        <tr>
+          <th className="px-4 py-3">Sr.</th>
+          <th className="px-4 py-3">Image</th>
+          <th className="px-4 py-3">Name</th>
+          <th className="px-4 py-3">Category</th>
+          <th className="px-4 py-3">Price</th>
+          <th className="px-4 py-3 text-center">Action</th>
+        </tr>
+      </thead>
 
-                {/* 🔥 Hover Full Preview */}
-                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                  <img
-                    src={`http://localhost:4000${item.image[0]}`}
-                    className="max-h-full max-w-full object-contain rounded-lg"
-                  />
-                </div>
-              </div>
+      {/* 🔹 Body */}
+      <tbody>
+        {products.map((item, index) => (
+          <tr
+            key={item._id}
+            className="border-t hover:bg-gray-50 transition"
+          >
+            {/* Sr No */}
+            <td className="px-4 py-3">{index + 1}</td>
 
-              {/* 🔹 Content */}
-              <div className="p-4">
-                <p className="text-sm font-medium text-gray-800 truncate">
-                  {item.name}
-                </p>
+            {/* Image */}
+            <td className="px-4 py-3">
+              <img
+                src={`http://localhost:4000${item.image[0]}`}
+                className="w-14 h-14 object-cover rounded-lg border"
+              />
+            </td>
 
-                <p className="mt-1 text-base font-semibold text-black">
-                  ₹ {item.price}
-                </p>
+            {/* Name */}
+            <td className="px-4 py-3 font-medium text-gray-800">
+              {item.name}
+            </td>
 
-                {/* 🔹 Actions */}
-                <div className="flex gap-2 mt-3">
-                  <button
-                    onClick={() => deleteProduct(item._id)}
-                    className="flex-1 bg-red-500 text-white py-1.5 rounded-lg text-sm hover:bg-red-600 transition"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+            {/* Category */}
+            <td className="px-4 py-3">
+              {item.category}
+            </td>
+
+            {/* Price */}
+            <td className="px-4 py-3 font-semibold">
+              ₹ {item.price}
+            </td>
+
+            {/* Delete */}
+            <td className="px-4 py-3 text-center">
+              <button
+                onClick={() => deleteProduct(item._id)}
+                className="bg-red-500 text-white px-3 py-1 rounded-md text-xs hover:bg-red-600 transition"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
     </div>
   );
 };
