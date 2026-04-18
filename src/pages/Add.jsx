@@ -42,13 +42,15 @@ const Add = ({ token }) => {
     try {
       const formData = new FormData();
 
-      Object.keys(data).forEach((key) => {
-        if (key === "sizes") {
-          formData.append("sizes", JSON.stringify(data.sizes));
-        } else {
-          formData.append(key, data[key]);
-        }
-      });
+     Object.keys(data).forEach((key) => {
+  if (key === "sizes") {
+    formData.append("sizes", JSON.stringify(data.sizes));
+  } else if (key === "bestseller") {
+    formData.append("bestseller", data.bestseller); // ✅ yaha add
+  } else {
+    formData.append(key, data[key]);
+  }
+});
 
       images.forEach((img, i) => {
         if (img) formData.append(`image${i + 1}`, img);
@@ -228,14 +230,14 @@ const Add = ({ token }) => {
           <div className="flex items-center gap-3">
             <input
               type="checkbox"
-              id="bestSeller"
-              checked={data.bestSeller}
+              id="bestseller"
+              checked={data.bestseller}
               onChange={(e) =>
-                setData({ ...data, bestSeller: e.target.checked })
+                setData({ ...data, bestseller: e.target.checked })
               }
               className="w-5 h-5 cursor-pointer"
             />
-            <label htmlFor="bestSeller" className="font-medium cursor-pointer">
+            <label htmlFor="bestseller" className="font-medium cursor-pointer">
               Add to Best Seller
             </label>
           </div>
